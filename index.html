@@ -3,15 +3,18 @@
 <head>
     <title>Toplist</title>
 	<script src="mithril.js"></script>
+	<link rel="stylesheet" type="text/css" href="app.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 </head>
 
 <body>
 	<div id='container'>
-		<div>
+		<div id="header">
 			<div class="title">Toplist</div>
 			<div class="item">a space for 18 important things</div>
-			<div class="item">made by <a target="_blank" href="https://twitter.com/dela3499">@dela3499</a></div>
-			<div class="item">fork on <a target="_blank" href="">GitHub</a></div>
+			<div class="item small">
+				made by <a target="_blank" href="https://twitter.com/dela3499">@dela3499</a> 
+				/ fork on <a target="_blank" href="https://github.com/dela3499/toplist">GitHub</a></div>
 		</div>
 		<div id="lists">
 		</div>	
@@ -22,56 +25,56 @@
 
 <script>
 
-	// localStorage.clear('toplist')
+	localStorage.clear('toplist')
 
 	// Initialize localStorage
 	var defaultModel = [
 		{
 			"title": "Why?",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"in other apps, you just keep adding things",
+				"you can't find the important things anymore",
+				"here, there's only space for the important"
 			]
 		},
 		{
 			"title": "Projects",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"go to venus",
+				"create llama from scratch",
+				"send quantum emails"
 			]
 		},
 		{
 			"title": "New habits",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"tell stories with the word 'hobbit'",
+				"lucid dream about Star Wars",
+				"wear cologne (w/smell of freshly-baked bread)"
 			]
 		},
 		{
 			"title": "How's it work?",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"click text to edit",
+				"data only saved locally (don't clear localStorage!)",
+				"doesn't sync with server or other devices"
 			]
 		},
 		{
 			"title": "Life goals",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"become bestselling author on Mars",
+				"write book - How to make a llama",
+				"be friends with an alien"
 			]
 		},
 		{
 			"title": "Llama book chapters",
 			"items": [
-				"this",
-				"is",
-				"it"
+				"sequencing llama DNA",
+				"obtaining regulatory approval",
+				"taking care of your llama"
 			]
 		}
 	]
@@ -84,6 +87,12 @@
 	}
 	
 	// Initialize UI
+
+	function pick(items){
+		var item = items[Math.floor(Math.random()*items.length)];
+		return item
+	}
+
 
 	function updateTitle(listIndex, newTitle) {
 		var localLists = JSON.parse(localStorage.getItem('toplist'));
@@ -99,8 +108,9 @@
 
 	function viewItem(listIndex, itemIndex, text) {
 		var update = function (input) { updateItem(listIndex, itemIndex,input.target.value) }
+		placeholder = pick(["obtain llama genome", "study llama behavior", "find 3 books on llamas", "find 3 books written by llamas", "read to a llama", "visit llama college", "get master's degree in llamaculture"])
 		return m('div', {class: "item"}, 
-				m('input', {value: text, oninput: update})
+				m('input', {value: text, oninput: update, placeholder: placeholder})
 			)
 	}
 
@@ -115,8 +125,9 @@
 
 	function viewTitle(listIndex, text) {
 		var update = function (input) { updateTitle(listIndex,input.target.value) }
+		var placeholder = pick(["Llama genome project", "Llama book", "Llama lifestyle design"])
 		return m('div', {class: "title"}, 
-				m('input', {value: text, oninput: update})
+				m('input', {value: text, oninput: update, placeholder: placeholder})
 			)
 	}
 
@@ -157,17 +168,5 @@
 	m.render(root, view(lists))
 
 </script>
-
-<style>
-	body {
-		background: #e6e6e6;
-	}
-	#container {
-		background: grey;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-</style>
-
 
 </html>
