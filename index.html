@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Toplist</title>
+	<script src="mithril.js"></script>
+</head>
+
+<body>
+	<div id='container'>
+		<div>
+			<div class="title">Toplist</div>
+			<div class="item">a space for 18 important things</div>
+			<div class="item">made by <a target="_blank" href="https://twitter.com/dela3499">@dela3499</a></div>
+			<div class="item">fork on <a target="_blank" href="">GitHub</a></div>
+		</div>
+		<div id="lists">
+		</div>	
+	</div>
+
+
+</body>
+
+<script>
+
+	// localStorage.clear('toplist')
+
+	// Initialize localStorage
+	var defaultModel = [
+		{
+			"title": "Why?",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		},
+		{
+			"title": "Projects",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		},
+		{
+			"title": "New habits",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		},
+		{
+			"title": "How's it work?",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		},
+		{
+			"title": "Life goals",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		},
+		{
+			"title": "Llama book chapters",
+			"items": [
+				"this",
+				"is",
+				"it"
+			]
+		}
+	]
+
+	var local = localStorage.getItem('toplist')
+
+	if (!local) {
+		console.log("just set default");
+		localStorage.setItem('toplist', JSON.stringify(defaultModel));
+	}
+	
+	// Initialize UI
+
+	function updateTitle(listIndex, newTitle) {
+		var localLists = JSON.parse(localStorage.getItem('toplist'));
+		localLists[listIndex]['title'] = newTitle;
+		localStorage.setItem('toplist', JSON.stringify(localLists));
+	}
+
+	function updateItem(listIndex, itemIndex, newItem) {
+		var localLists = JSON.parse(localStorage.getItem('toplist'));
+		localLists[listIndex]['items'][itemIndex] = newItem;
+		localStorage.setItem('toplist', JSON.stringify(localLists));
+	}	
+
+	function viewItem(listIndex, itemIndex, text) {
+		var update = function (input) { updateItem(listIndex, itemIndex,input.target.value) }
+		return m('div', {class: "item"}, 
+				m('input', {value: text, oninput: update})
+			)
+	}
+
+	function viewItems(listIndex, items) {
+		return m('div', {class: "items"}, [
+			viewItem(listIndex, 0, items[0]),
+			viewItem(listIndex, 1, items[1]),
+			viewItem(listIndex, 2, items[2])
+			]
+		)
+	}
+
+	function viewTitle(listIndex, text) {
+		var update = function (input) { updateTitle(listIndex,input.target.value) }
+		return m('div', {class: "title"}, 
+				m('input', {value: text, oninput: update})
+			)
+	}
+
+	function viewList(listIndex, list) {
+		return m('div', {class: "list"}, 
+				[ viewTitle(listIndex, list['title']),
+				  viewItems(listIndex, list['items'])
+				])
+	}
+
+	function imap(f, xs) {
+		ys = []
+		for (i = 0; i < xs.length; i++) { 
+		    ys[i] = f(i, xs[i])
+		}
+		return ys
+	}	
+
+	function map2(f, xs, ys) {
+		zs = []
+		for (i = 0; i < xs.length; i++) { 
+		    zs[i] = f(xs[i], ys[i])
+		}
+		return zs
+	}		
+
+	function view(lists) {
+		return m("div", [
+			m('div', {class: "column"}, map2(viewList, [0,1,2], lists.slice(0,3))),
+			m('div', {class: "column"}, map2(viewList, [3,4,5], lists.slice(3,6)))
+			]
+			)
+	}
+
+	var lists = JSON.parse(localStorage.getItem('toplist'))
+	
+	var root = document.getElementById("lists")
+	m.render(root, view(lists))
+
+</script>
+
+<style>
+	body {
+		background: #e6e6e6;
+	}
+	#container {
+		background: grey;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+</style>
+
+
+</html>
