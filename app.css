@@ -11,6 +11,13 @@ body.llama {
 	background-size: cover;	
 }
 
+#header {
+/*#header, #header * {*/
+	/*opacity: 1 !important;*/
+	border-left: 10px solid grey;
+	padding-left: 20px;
+}
+
 #container {
 	max-width: 950px;
 	margin: 0 auto;
