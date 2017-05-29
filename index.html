@@ -19,11 +19,22 @@
 		<div id="lists">
 		</div>	
 	</div>
-
-
+	<div id="llama-toggle" onclick="toggleLlama()">
+	</div>
 </body>
 
 <script>
+
+	function toggleLlama() {
+		var body = document.getElementsByTagName("BODY")[0];
+
+		if (body.classList.contains('llama')){
+			body.classList.remove('llama')
+		} else {
+			body.classList.add('llama')
+		}
+		
+	}
 
 	// localStorage.clear('toplist')
 
@@ -110,7 +121,7 @@
 		var update = function (input) { updateItem(listIndex, itemIndex,input.target.value) }
 		placeholder = pick(["obtain llama genome", "study llama behavior", "find 3 books on llamas", "find 3 books written by llamas", "read to a llama", "visit llama college", "get master's degree in llamaculture"])
 		return m('div', {class: "item"}, 
-				m('input', {value: text, oninput: update, placeholder: placeholder})
+				m('input', {value: text, oninput: update, placeholder: "... " + placeholder})
 			)
 	}
 
@@ -127,7 +138,7 @@
 		var update = function (input) { updateTitle(listIndex,input.target.value) }
 		var placeholder = pick(["Llama genome project", "Llama book", "Llama lifestyle design"])
 		return m('div', {class: "title"}, 
-				m('input', {value: text, oninput: update, placeholder: placeholder})
+				m('input', {value: text, oninput: update, placeholder: "# " + placeholder})
 			)
 	}
 

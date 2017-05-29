@@ -3,6 +3,14 @@ body {
 	letter-spacing: 0px;
 }
 
+body.llama {
+	background: url("llama.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;	
+}
+
 #container {
 	max-width: 950px;
 	margin: 0 auto;
@@ -74,9 +82,20 @@ input:focus{
   color: grey;
 }
 
+body {
+	overflow: auto;
+}
+
+#llama-toggle {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	height: 10px;
+	width: 10px;
+}
+
 @media (max-width: 1050px) {
     #container {
-    	/*margin: 0px;*/
     	margin-left: 50px;
     }
 
